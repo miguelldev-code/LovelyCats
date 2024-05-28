@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: co.edu.usco.pw.springboot_crud01.SpringbootCrud01ApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.139 s - in co.edu.usco.pw.springboot_crud01.SpringbootCrud01ApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 26.253 s - in co.edu.usco.pw.springboot_crud01.SpringbootCrud01ApplicationTests
