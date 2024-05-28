@@ -75,8 +75,8 @@
                 <p class="fs-4 text-white mb-lg-4"><spring:message code="presentation.subtitle"
                                                                    text="Adopta y date la oportunidad de conocer a tu nuevo compañero, además conoce nuestros servicios para el bien y cuidado de tu mascota"/></p>
                 <div class="d-flex align-items-center justify-content-center justify-content-lg-start pt-5">
-                    <a href="#" class="btn btn-outline-light border-2 py-md-3 px-md-5 me-5"><spring:message
-                            code="presentation.moreInfo" text="Más información"/></a>
+                    <a href="/adopte" class="btn btn-outline-light border-2 py-md-3 px-md-5 me-5"><spring:message
+                            code="presentation.moreInfo" text="Adopta ya"/></a>
                     <button type="button" class="btn-play" data-bs-toggle="modal"
                             data-src="https://www.youtube.com/embed/yOSxgvTCc4U" data-bs-target="#videoModal">
                         <span></span>
