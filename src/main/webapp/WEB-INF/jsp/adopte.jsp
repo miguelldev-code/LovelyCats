@@ -46,8 +46,6 @@
             <a href="/adopte" class="nav-item nav-link active"><spring:message code="navbar.adoptar"/></a>
             <a href="/service" class="nav-item nav-link"><spring:message code="navbar.servicios"/></a>
             <a href="/vsc-product" class="nav-item nav-link"><spring:message code="navbar.productos"/></a>
-            <a href="#" class="nav-item nav-link"><spring:message code="navbar.blog"/></a>
-
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle bi bi-translate" data-bs-toggle="dropdown"><spring:message
                         code="navbar.idioma"/></a>

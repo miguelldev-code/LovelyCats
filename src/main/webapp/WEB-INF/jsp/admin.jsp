@@ -49,8 +49,6 @@
             <a href="/adopte" class="nav-item nav-link "><spring:message code="navbar.adoptar"/></a>
             <a href="/service" class="nav-item nav-link"><spring:message code="navbar.servicios"/></a>
             <a href="/vsc-product" class="nav-item nav-link"><spring:message code="navbar.productos"/></a>
-            <a href="#" class="nav-item nav-link"><spring:message code="navbar.blog"/></a>
-
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle bi bi-translate" data-bs-toggle="dropdown"><spring:message
                         code="navbar.idioma"/></a>
@@ -70,13 +68,13 @@
 
 <!-- Inicio Opcion admin -->
 <div class="container mt-5">
-    <h1 class="text-center">Admin Panel</h1>
+    <h1 class="text-center">Panel de administrador</h1>
     <div class="row justify-content-center mt-4">
         <div class="col-md-6 text-center">
-            <a href="/list-product" class="btn btn-primary btn-lg mb-3 w-100">Manage Products</a>
+            <a href="/list-products" class="btn btn-primary btn-lg mb-3 w-100">Administrar Productos</a>
         </div>
         <div class="col-md-6 text-center">
-            <a href="/list-pet" class="btn btn-secondary btn-lg mb-3 w-100">Manage Pets</a>
+            <a href="/list-pets" class="btn btn-secondary btn-lg mb-3 w-100">Administrar Mascotas</a>
         </div>
     </div>
 </div>

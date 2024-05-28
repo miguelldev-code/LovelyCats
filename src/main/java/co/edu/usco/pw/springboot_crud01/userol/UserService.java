@@ -22,19 +22,17 @@ public class UserService implements UserDetService {
     @Autowired
     private RolService rolService;
 
-    // Para listar usuarios
     public Users getData(String user) {
         return userRepository.findByUserUser(user);
     }
 
-    // Registro de usuarios quemados
+    //Registro del admin
     public Users registro() {
         Users usuario = new Users("Miguel", "Ortiz", "miguelldev", "79199122",
                 Arrays.asList(new rol("ROLE_ADMIN")));
         return userRepository.save(usuario);
     }
 
-    // Registro de nuevos usuarios
     public Users registerNewUser(Users users) {
         rol userRole = rolService.findRoleByName("ROLE_USER");
 

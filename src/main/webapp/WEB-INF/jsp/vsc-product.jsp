@@ -46,8 +46,6 @@
             <a href="/adopte" class="nav-item nav-link "><spring:message code="navbar.adoptar"/></a>
             <a href="/service" class="nav-item nav-link"><spring:message code="navbar.servicios"/></a>
             <a href="/vsc-product" class="nav-item nav-link active"><spring:message code="navbar.productos"/></a>
-            <a href="#" class="nav-item nav-link"><spring:message code="navbar.blog"/></a>
-
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle bi bi-translate" data-bs-toggle="dropdown"><spring:message
                         code="navbar.idioma"/></a>
@@ -80,8 +78,7 @@
                         <h6 class="text-uppercase">${product.nameProduct}</h6>
                         <h5 class="text-primary mb-0">${product.price}</h5>
                         <div class="btn-action d-flex justify-content-center">
-                            <a class="btn btn-primary py-2 px-3" href=""><i class="bi bi-cart"></i></a>
-                            <a class="btn btn-primary py-2 px-3" href=""><i class="bi bi-eye"></i></a>
+                            <a class="btn btn-primary py-2 px-3" href="https://api.whatsapp.com/send/?phone=573184162184" target="_blank"><i class="bi bi-whatsapp"></i></a>
                         </div>
                     </div>
                 </div>

@@ -32,7 +32,7 @@ public class SuccesController {
         return "welcome";
     }
 
-    @GetMapping("/welcome/admin")
+    @GetMapping("/admin")
     public String welcomeAdmin(Model model) {
         List<Users> todos = userRepository.findAll();
         model.addAttribute("usuarios", todos);

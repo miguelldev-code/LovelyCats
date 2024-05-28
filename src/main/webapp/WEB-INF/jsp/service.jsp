@@ -45,8 +45,6 @@
             <a href="/adopte" class="nav-item nav-link "><spring:message code="navbar.adoptar"/></a>
             <a href="/service" class="nav-item nav-link active"><spring:message code="navbar.servicios"/></a>
             <a href="/vsc-product" class="nav-item nav-link"><spring:message code="navbar.productos"/></a>
-            <a href="#" class="nav-item nav-link"><spring:message code="navbar.blog"/></a>
-
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle bi bi-translate" data-bs-toggle="dropdown"><spring:message
                         code="navbar.idioma"/></a>
@@ -91,7 +89,7 @@
                         <h5 class="text-uppercase mb-3"><spring:message
                                 code="caracteristicasPrincipales.comunidadActiva"/></h5>
                         <p><spring:message code="caracteristicasPrincipales.comunidadActivaDescripcion"/></p>
-                        <a href="https://www.corazonpeludito.org/" class="btn btn-primary"><spring:message
+                        <a href="https://www.corazonpeludito.org/" class="btn btn-primary" target="_blank"><spring:message
                                 code="caracteristicasPrincipales.masInformacion"/></a>
                     </div>
                 </div>
@@ -115,7 +113,7 @@
                         <h5 class="text-uppercase mb-3"><spring:message
                                 code="caracteristicasPrincipales.contenidoEducativo"/></h5>
                         <p><spring:message code="caracteristicasPrincipales.contenidoEducativoDescripcion"/></p>
-                        <a href="https://www.fundacion-affinity.org/perros-gatos-y-personas/busco-un-animal-de-compania/la-adopcion-una-nueva-oportunidad-para-los" class="btn btn-primary"><spring:message
+                        <a href="https://www.fundacion-affinity.org/perros-gatos-y-personas/busco-un-animal-de-compania/la-adopcion-una-nueva-oportunidad-para-los" class="btn btn-primary" target="_blank"><spring:message
                                 code="caracteristicasPrincipales.masInformacion"/></a>
                     </div>
                 </div>

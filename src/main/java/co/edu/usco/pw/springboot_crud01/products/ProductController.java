@@ -51,7 +51,6 @@ public class ProductController {
         return principal.toString();
     }
 
-    //---------------------------------------------------------------
     @GetMapping(value = "/uploads/product/{filename}")
     public ResponseEntity<Resource> goImage(@PathVariable String filename) {
         Resource resource = null;
@@ -90,14 +89,12 @@ public class ProductController {
         }
     }
 
-    //---------------------------------------------------------------
     @RequestMapping(value = "/delete-product", method = RequestMethod.GET)
     public String deleteProduct(@RequestParam long id) {
         productService.deleteProduct(id);
         return "redirect:/list-products";
     }
 
-    //---------------------------------------------------------------
     @RequestMapping(value = "/update-product", method = RequestMethod.GET)
     public String showUpdateProductPage(@RequestParam long id, ModelMap model) {
         Product product = productService.getProductById(id).get();
@@ -105,7 +102,6 @@ public class ProductController {
         return "products/product";
     }
 
-    //---------------------------------------------------------------
     @RequestMapping(value = "/update-product", method = RequestMethod.POST)
     public String updateProduct(ModelMap model, @Valid Product product, BindingResult result) {
         if (result.hasErrors()) {

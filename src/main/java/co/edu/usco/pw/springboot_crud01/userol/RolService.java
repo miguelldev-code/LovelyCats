@@ -9,12 +9,10 @@ public class RolService {
     @Autowired
     private RoleRepository roleRepository;
 
-    // Método para encontrar un rol por su nombre
     public rol findRoleByName(String roleName) {
         return roleRepository.findByRolNombre(roleName);
     }
 
-    // Método para guardar un nuevo rol
     public rol saveRole(rol role) {
         return roleRepository.save(role);
     }

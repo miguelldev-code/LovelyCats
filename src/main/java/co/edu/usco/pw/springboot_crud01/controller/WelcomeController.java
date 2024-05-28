@@ -19,8 +19,6 @@ public class WelcomeController {
     @Autowired
     private UserService userService;
 
-    //---------------------------------------------------------------------------------------
-
     @GetMapping("/")
     public String Welcome(Model model) {
         return "welcome";
@@ -31,8 +29,6 @@ public class WelcomeController {
     public String LoginPage() {
         return "login";
     }
-
-    //---------------------------------------------------------------------------------------
 
     @PostMapping("/login")
     public String login(@RequestParam("username") String username, @RequestParam("password") String password, Model model) {
@@ -49,8 +45,6 @@ public class WelcomeController {
             return "login";
         }
     }
-
-    //---------------------------------------------------------------------------------------
 
     @GetMapping("/register")
     public String registro(Model model) {
@@ -77,7 +71,6 @@ public class WelcomeController {
         }
     }
 
-    //---------------------------------------------------------------------------------------
 
     @GetMapping("/service")
     public String service(Model model) {
