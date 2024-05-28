@@ -1,45 +1,65 @@
 package co.edu.usco.pw.springboot_crud01.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import co.edu.usco.pw.springboot_crud01.userol.UserService;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    private UserService userService;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
+
+    @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .withUser("admin").password("admin").roles("ADMIN")
-                .and()
-                .withUser("student").password("student").roles("STUDENT")
-                .and()
-                .withUser("professor").password("professor").roles("PROFESSOR")
-                .and()
-                .withUser("maintenance").password("maintenance").roles("MAINTENANCE");
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login", "/h2-console/**").permitAll() // Permitir acceso a ciertas URLs sin autenticación
-                .antMatchers("/student/**").hasRole("STUDENT") // Solo estudiantes pueden acceder a recursos de estudiantes
-                .antMatchers("/professor/**").hasRole("PROFESSOR") // Solo profesores pueden acceder a recursos de profesores
-                .antMatchers("/maintenance/**").hasRole("MAINTENANCE") // Solo personal de mantenimiento puede acceder a recursos de mantenimiento
-                .antMatchers("/*todo*/**").hasRole("ADMIN") // Solo el administrador puede acceder a recursos de administración
-                .anyRequest().authenticated() // Cualquier otra solicitud requiere autenticación
+                .antMatchers("/", "/welcome", "/login", "/h2-console/**",
+                        "/register", "/resources/**", "/adopte").permitAll()
+                .antMatchers("/welcome").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/welcome/user").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/welcome/admin").hasRole("ADMIN")
+                .antMatchers("/adopte").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/list-pets", "/add-pet", "/update-pet", "/delete-pet").hasAnyRole("ADMIN")
+                .antMatchers("/list-products", "/add-product", "/update-product", "/delete-product").hasAnyRole("ADMIN")
+                .anyRequest().authenticated()
                 .and()
-                .formLogin()// Esto permite que tu controlador maneje las solicitudes a /login; // Configuración de inicio de sesión basado en formulario
+                .formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("/login");
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/welcome")
+                .permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .permitAll();
 
-        http.csrf().disable(); // Desactivar CSRF
-        http.headers().frameOptions().disable(); // Desactivar opciones de frame para H2 Console
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
     }
+
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new CustomAuthenticationSuccessHandler();
+    }
+
+
 }
-
-
