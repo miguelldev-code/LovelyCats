@@ -73,7 +73,6 @@
                     <h1 class="display-5 text-uppercase text-white mb-0"><spring:message code="adopte.subtitulo"/></h1>
                 </div>
                 <p class="text-white mb-4"><spring:message code="adopte.descripcion"/></p>
-                <a href="" class="btn btn-light py-md-3 px-md-5 me-3"><spring:message code="adopte.masInfo"/></a>
                 <a href="" class="btn btn-outline-light py-md-3 px-md-5" data-bs-toggle="modal"
                    data-src="https://forms.gle/ZYiqHEoh4oRhN2yT9" data-bs-target="#formularioModal"><spring:message
                         code="adopte.descargarForm"/></a>
