@@ -17,16 +17,23 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                                         Authentication authentication) throws IOException, ServletException {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
+        // Logs para depuración
+        System.out.println("Usuario autenticado: " + authentication.getName());
+        System.out.println("Roles asignados: " + authorities);
+
+        // Redirección basada en el rol
+        String redirectUrl = "/welcome"; // Redirección por defecto
+
         for (GrantedAuthority authority : authorities) {
-            if (authority.getAuthority().equals("ROLE_ADMIN")) {
-                response.sendRedirect("/welcome/admin");
-                return;
-            } else if (authority.getAuthority().equals("ROLE_USER")) {
-                response.sendRedirect("/welcome");
-                return;
+            String role = authority.getAuthority();
+            if ("ROLE_ADMIN".equals(role)) {
+                redirectUrl = "/welcome/admin";
+                break; // Prioriza admin si el usuario tiene múltiples roles
+            } else if ("ROLE_USER".equals(role)) {
+                redirectUrl = "/welcome";
             }
         }
 
-        throw new IllegalStateException();
+        response.sendRedirect(redirectUrl);
     }
 }
