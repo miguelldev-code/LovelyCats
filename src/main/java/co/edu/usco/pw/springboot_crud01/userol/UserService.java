@@ -6,6 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -22,19 +23,27 @@ public class UserService implements UserDetService {
     @Autowired
     private RolService rolService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public Users getData(String user) {
         return userRepository.findByUserUser(user);
     }
 
     //Registro del admin
     public Users registro() {
-        Users usuario = new Users("Miguel", "Ortiz", "miguelldev", "79199122",
-                Arrays.asList(new rol("ROLE_ADMIN")));
+        String hashedPassword = passwordEncoder.encode("79199122");
+
+        rol adminRole = rolService.getOrCreateAdminRole();
+
+        Users usuario = new Users("Miguel", "Ortiz", "miguelldev", hashedPassword,
+                Arrays.asList(adminRole));
         return userRepository.save(usuario);
     }
 
+
     public Users registerNewUser(Users users) {
-        rol userRole = rolService.findRoleByName("ROLE_USER");
+        rol userRole = rolService.getOrCreateUserRole();
 
         Users newUser = new Users(
                 users.getUserNombre(),
@@ -46,6 +55,7 @@ public class UserService implements UserDetService {
 
         return userRepository.save(newUser);
     }
+
 
     @Override
     public List<Users> buscarTodos() {
