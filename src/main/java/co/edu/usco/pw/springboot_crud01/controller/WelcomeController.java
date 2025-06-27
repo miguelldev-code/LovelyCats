@@ -30,22 +30,6 @@ public class WelcomeController {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password, Model model) {
-        try {
-            UserDetails userDetails = userService.loadUserByUsername(username);
-            if (passwordEncoder.matches(password, userDetails.getPassword())) {
-                return "redirect:/welcome";
-            } else {
-                model.addAttribute("error", "Nombre de usuario o contraseña incorrectos");
-                return "login";
-            }
-        } catch (UsernameNotFoundException e) {
-            model.addAttribute("error", "Nombre de usuario o contraseña incorrectos");
-            return "login";
-        }
-    }
-
     @GetMapping("/register")
     public String registro(Model model) {
         try {
@@ -56,6 +40,7 @@ public class WelcomeController {
             return "register";
         }
     }
+
 
     @PostMapping("/register")
     public String registro(@ModelAttribute Users user) {
