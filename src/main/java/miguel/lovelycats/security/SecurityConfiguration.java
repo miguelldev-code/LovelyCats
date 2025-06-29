@@ -29,7 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/login", "/register", "/resources/**", "/h2-console/**").permitAll()
 
                 // Páginas accesibles para cualquier usuario logueado (normal o admin)
-                .antMatchers("/welcome").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/welcome", "/adopte", "/vsc-product").hasAnyRole("USER", "ADMIN")
 
                 // Panel solo visible para admin
                 .antMatchers("/admin/**", "/welcome/admin", "/list-pets", "/add-pet", "/update-pet", "/delete-pet",
