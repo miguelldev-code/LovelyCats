@@ -1,13 +1,14 @@
-# Stage 1: Build the application
-FROM maven:3.8.5-openjdk-17 as build
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
+# Imagen base de Tomcat
+FROM tomcat:9.0-jdk17
 
-# Stage 2: Run the application
-FROM openjdk:17.0.1-jdk-slim
-WORKDIR /app
-COPY --from=build /app/target/LovelyCats-0.0.1-SNAPSHOT.jar demo.jar
-COPY --from=build /app/src /app/src
+# Elimina aplicaciones por defecto
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+# Copia tu WAR
+COPY target/LovelyCats-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
+
+# Exponer el puerto (Tomcat default 8080)
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "demo.jar"]
+
+# Comando de arranque
+CMD ["catalina.sh", "run"]
