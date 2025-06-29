@@ -17,8 +17,12 @@ RUN mvn clean package -DskipTests
 # =============================================
 FROM tomcat:9.0-jdk17
 
-# Optional: Clean default Tomcat apps
+# Clean default Tomcat apps
 RUN rm -rf /usr/local/tomcat/webapps/*
+
+# Crear carpeta de uploads
+RUN mkdir -p /usr/local/tomcat/uploads \
+    && chmod -R 777 /usr/local/tomcat/uploads
 
 # Copy the built WAR as ROOT.war
 COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
