@@ -103,12 +103,6 @@ Desarrollar un **sistema integrado** que mejore la **accesibilidad** y **experie
 
 ---
 
-## 📎 Enlace al repositorio
-
-[Repositorio GitHub](https://github.com/miguelortiz11/lovelycats)
-
----
-
 ## 🧭 Instrucciones de instalación y ejecución
 
 ### ⚡ Requisitos previos
