@@ -95,7 +95,6 @@
             <artifactId>spring-webmvc</artifactId>
         </dependency>
 
-        <!-- Webjars for static resources -->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
@@ -114,7 +113,6 @@
             <version>1.9.1</version>
         </dependency>
 
-        <!-- DevTools and Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
