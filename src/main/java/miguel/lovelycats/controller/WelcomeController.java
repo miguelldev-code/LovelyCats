@@ -1,62 +1,64 @@
 package miguel.lovelycats.controller;
 
+import miguel.lovelycats.userol.User;
 import miguel.lovelycats.userol.UserService;
-import miguel.lovelycats.userol.Users;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
+@RequiredArgsConstructor
 public class WelcomeController {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final miguel.lovelycats.products.ProductService productService;
+    private final miguel.lovelycats.pets.PetService petService;
 
     @GetMapping("/")
-    public String Welcome(Model model) {
+    public String welcome(Model model) {
+        // Mostrar los primeros 4 productos como "Destacados"
+        model.addAttribute("featuredProducts", productService.findAll().stream().limit(4).toList());
+        // Mostrar las primeras 4 mascotas como "Recientes"
+        model.addAttribute("recentPets", petService.getAllPets().stream().limit(4).toList());
         return "welcome";
     }
 
+    @GetMapping("/welcome")
+    public String welcomeAlias() {
+        return "redirect:/";
+    }
 
     @GetMapping("/login")
-    public String LoginPage() {
+    public String loginPage() {
         return "login";
     }
 
     @GetMapping("/register")
-    public String registro(Model model) {
-        try {
-            Users user = userService.registro();
-            model.addAttribute("REGISTRO", user);
-            return "register";
-        } catch (Exception e) {
-            return "register";
-        }
+    public String registerPage(Model model) {
+        model.addAttribute("user", new User());
+        return "register";
     }
-
 
     @PostMapping("/register")
-    public String registro(@ModelAttribute Users user) {
+    public String registerUser(@ModelAttribute User user) {
         try {
-            String encodedPassword = passwordEncoder.encode(user.getUserPassword());
-            user.setUserPassword(encodedPassword);
-
             userService.registerNewUser(user);
-
-            return "redirect:/login";
+            return "redirect:/login?success";
+        } catch (DataIntegrityViolationException e) {
+            e.printStackTrace();
+            return "redirect:/register?error=duplicate";
         } catch (Exception e) {
-            return "register";
+            e.printStackTrace();
+            return "redirect:/register?error=generic";
         }
     }
 
-
     @GetMapping("/service")
-    public String service(Model model) {
+    public String service() {
         return "service";
     }
 }

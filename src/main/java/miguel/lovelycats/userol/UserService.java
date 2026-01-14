@@ -3,8 +3,8 @@ package miguel.lovelycats.userol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService implements UserDetService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -26,54 +26,68 @@ public class UserService implements UserDetService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Users getData(String user) {
-        return userRepository.findByUserUser(user);
+    public User getData(String email) {
+        return userRepository.findByEmail(email).orElse(null);
     }
 
-    //Registro del admin
-    public Users registro() {
+    // Método legacy o para inicialización
+    public User registro() {
+        if (userRepository.findByEmail("miguelldev").isPresent()) {
+            return userRepository.findByEmail("miguelldev").get();
+        }
+
         String hashedPassword = passwordEncoder.encode("79199122");
+        Role adminRole = rolService.getOrCreateAdminRole();
 
-        rol adminRole = rolService.getOrCreateAdminRole();
-
-        Users usuario = new Users("Miguel", "Ortiz", "miguelldev", hashedPassword,
-                Arrays.asList(adminRole));
+        User usuario = new User("Miguel", "Ortiz", "miguelldev", hashedPassword, Arrays.asList(adminRole));
         return userRepository.save(usuario);
     }
 
-
-    public Users registerNewUser(Users users) {
-        rol userRole = rolService.getOrCreateUserRole();
-
-        Users newUser = new Users(
-                users.getUserNombre(),
-                users.getUserApellido(),
-                users.getUserUser(),
-                users.getUserPassword(),
-                Arrays.asList(userRole)
-        );
-
-        return userRepository.save(newUser);
+    // Nuevo Admin por defecto
+    public void createDefaultAdmin() {
+        String email = "admin@lovelycats.com";
+        if (userRepository.findByEmail(email).isEmpty()) {
+            Role adminRole = rolService.getOrCreateAdminRole();
+            User admin = new User();
+            admin.setFirstName("Admin");
+            admin.setLastName("System");
+            admin.setEmail(email);
+            admin.setPassword(passwordEncoder.encode("admin123"));
+            admin.setRoles(Arrays.asList(adminRole));
+            userRepository.save(admin);
+            System.out.println("ADMIN USER CREATED: " + email + " / admin123");
+        }
     }
 
+    public User registerNewUser(User user) {
+        Role userRole = rolService.getOrCreateUserRole();
+        user.setRoles(Arrays.asList(userRole));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
 
-    @Override
-    public List<Users> buscarTodos() {
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
+
+    public List<User> buscarTodos() {
         return userRepository.findAll();
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users user = userRepository.findByUserUser(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("Usuario o contraseña no válidos");
-        }
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario o contraseña no válidos"));
 
-        return new User(user.getUserUser(), user.getUserPassword(), mapRoles(user.getRoles()));
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
+                user.getPassword(),
+                mapRoles(user.getRoles()));
     }
 
-    // Mapeo de rol
-    private Collection<? extends GrantedAuthority> mapRoles(Collection<rol> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRolNombre())).collect(Collectors.toList());
+    private Collection<? extends GrantedAuthority> mapRoles(Collection<Role> roles) {
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
     }
 }

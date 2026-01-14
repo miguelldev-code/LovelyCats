@@ -9,31 +9,28 @@ public class RolService {
     @Autowired
     private RoleRepository roleRepository;
 
-    public rol findRoleByName(String roleName) {
-        return roleRepository.findByRolNombre(roleName);
+    public Role findRoleByName(String roleName) {
+        return roleRepository.findByName(roleName);
     }
 
-    public rol saveRole(rol role) {
+    public Role saveRole(Role role) {
         return roleRepository.save(role);
     }
 
-    public rol getOrCreateUserRole() {
-        rol role = roleRepository.findByRolNombre("ROLE_USER");
+    public Role getOrCreateUserRole() {
+        return getOrCreateRole("ROLE_USER");
+    }
+
+    public Role getOrCreateAdminRole() {
+        return getOrCreateRole("ROLE_ADMIN");
+    }
+
+    private Role getOrCreateRole(String roleName) {
+        Role role = roleRepository.findByName(roleName);
         if (role == null) {
-            role = new rol("ROLE_USER");
+            role = new Role(roleName);
             roleRepository.save(role);
         }
         return role;
     }
-
-    public rol getOrCreateAdminRole() {
-        rol role = roleRepository.findByRolNombre("ROLE_ADMIN");
-        if (role == null) {
-            role = new rol("ROLE_ADMIN");
-            roleRepository.save(role);
-        }
-        return role;
-    }
-
-
 }

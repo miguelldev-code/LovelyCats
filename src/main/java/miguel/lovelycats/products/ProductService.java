@@ -1,49 +1,48 @@
 package miguel.lovelycats.products;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 @Service
-public class ProductService implements IProductService {
+@RequiredArgsConstructor
+public class ProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-
-    @Override
     public List<Product> getProductByUser(String user) {
         return productRepository.findByUserName(user);
     }
 
-    @Override
     public Optional<Product> getProductById(long id) {
         return productRepository.findById(id);
     }
 
-    @Override
     public void updateProduct(Product product) {
         productRepository.save(product);
     }
 
-    @Override
-    public void addProduct(String nameProduct, String description, String price, String image) {
-        productRepository.save(new Product(nameProduct, description, price, image));
-    }
-
-    @Override
-    public void deleteProduct(long id) {
-        Optional<Product> product = productRepository.findById(id);
-        if (product.isPresent()) {
-            productRepository.delete(product.get());
-        }
-
-    }
-
-    @Override
     public void saveProduct(Product product) {
         productRepository.save(product);
+    }
+
+    public void addProduct(String nameProduct, String description, Long price, String image) {
+        // Nota: Price cambiado a Long según nueva entidad
+        Product product = new Product();
+        product.setNameProduct(nameProduct);
+        product.setDescription(description);
+        product.setPrice(price);
+        product.setImage(image);
+        productRepository.save(product);
+    }
+
+    public void deleteProduct(long id) {
+        productRepository.deleteById(id);
+    }
+
+    public List<Product> findAll() {
+        return productRepository.findAll();
     }
 }

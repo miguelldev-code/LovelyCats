@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Panel de Administración</h1>
+
+        <div class="row">
+            <!-- Gestión de Productos -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Productos</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Gestione el inventario de la tienda.</p>
+                        <div class="d-grid gap-2">
+                            <a href="/list-products" class="btn btn-outline-primary">Ver Lista de Productos</a>
+                            <a href="/add-product" class="btn btn-outline-success">Agregar Nuevo Producto</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gestión de Mascotas -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">Mascotas</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Administre las mascotas disponibles para adopción.</p>
+                        <div class="d-grid gap-2">
+                            <a href="/list-pets" class="btn btn-outline-success">Ver Lista de Mascotas</a>
+                            <a href="/add-pet" class="btn btn-outline-primary">Agregar Nueva Mascota</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 text-center mt-3">
+                <a href="/welcome" class="btn btn-secondary">Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+
+</html>

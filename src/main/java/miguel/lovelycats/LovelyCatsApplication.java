@@ -1,20 +1,23 @@
 package miguel.lovelycats;
 
+import miguel.lovelycats.userol.UserService;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class LovelyCatsApplication extends SpringBootServletInitializer {
+public class LovelyCatsApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(LovelyCatsApplication.class, args);
     }
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(LovelyCatsApplication.class);
+    @Bean
+    public CommandLineRunner init(UserService userService) {
+        return args -> {
+            userService.createDefaultAdmin();
+        };
     }
-}
 
+}

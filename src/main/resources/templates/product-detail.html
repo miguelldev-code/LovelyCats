@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container py-5">
+        <div class="row" th:if="${product != null}">
+            <div class="col-lg-5 mb-5 mb-lg-0">
+                <div class="position-relative h-100 border">
+                    <img class="img-fluid w-100 h-100 object-fit-cover" th:src="@{/img/product-placeholder.jpg}"
+                        alt="Product Image" style="min-height: 400px;">
+                    <!-- Nota: En un caso real usaríamos th:src="@{'/uploads/product/' + ${product.image}}" si existe -->
+                </div>
+            </div>
+
+            <div class="col-lg-7 pb-5">
+                <h3 class="font-weight-semi-bold" th:text="${product.nameProduct}">Nombre Producto</h3>
+                <h3 class="font-weight-semi-bold mb-4" th:text="'$ ' + ${product.price}">$150.00</h3>
+                <p class="mb-4" th:text="${product.description}">Descripción del producto...</p>
+
+                <div class="d-flex align-items-center mb-4 pt-2">
+                    <div class="input-group quantity mr-3" style="width: 130px;">
+                        <input type="number" class="form-control text-center" value="1" min="1">
+                    </div>
+                    <button class="btn btn-primary px-3 ms-3"><i class="fa fa-shopping-cart mr-1"></i> Añadir al
+                        Carrito</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" th:unless="${product != null}">
+            <div class="col-12 text-center">
+                <h3>Producto no encontrado</h3>
+                <a href="/products" class="btn btn-primary mt-3">Volver al catálogo</a>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: footer}"></div>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+
+</html>

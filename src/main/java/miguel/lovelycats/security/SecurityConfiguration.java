@@ -1,58 +1,70 @@
 package miguel.lovelycats.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import miguel.lovelycats.userol.UserService;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+@EnableWebSecurity
+public class SecurityConfiguration {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
+    public SecurityConfiguration(UserService userService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                // Páginas públicas
-                .antMatchers("/", "/login", "/register", "/resources/**", "/h2-console/**").permitAll()
+    // Configuración para ignorar completamente la seguridad en recursos estáticos
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/webjars/**",
+                "/uploads/**");
+    }
 
-                // Páginas accesibles para cualquier usuario logueado (normal o admin)
-                .antMatchers("/welcome", "/adopte", "/vsc-product").hasAnyRole("USER", "ADMIN")
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/", "/login", "/register", "/products", "/product-detail", "/cart/**")
+                        .permitAll()
+                        .requestMatchers("/welcome", "/adopt").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/admin/**", "/list-pets", "/add-pet", "/update-pet", "/delete-pet",
+                                "/list-products", "/add-product", "/update-product", "/delete-product")
+                        .hasRole("ADMIN")
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/welcome", true)
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll());
 
-                // Panel solo visible para admin
-                .antMatchers("/admin/**", "/welcome/admin", "/list-pets", "/add-pet", "/update-pet", "/delete-pet",
-                        "/list-products", "/add-product", "/update-product", "/delete-product")
-                .hasRole("ADMIN")
+        return http.build();
+    }
 
-                // Bloquea cualquier otra ruta que no esté arriba
-                .anyRequest().authenticated()
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userService);
+        authProvider.setPasswordEncoder(passwordEncoder);
+        return authProvider;
+    }
 
-                .and()
-                // Login controlado por Spring
-                .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/welcome", true)
-                .permitAll()
-
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
-                .permitAll();
-
-        http.csrf().disable();
-        http.headers().frameOptions().disable();
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 }

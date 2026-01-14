@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <!-- Inicio Productos -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 800px;">
+                <h6 class="text-primary text-uppercase">Nuestros Productos</h6>
+                <h1 class="display-5 text-uppercase mb-0">Lo mejor para tu mascota</h1>
+            </div>
+
+            <div class="row"> <!-- Grid en lugar de carousel para mejor visualización en catálogo -->
+                <div class="col-lg-4 col-md-6 mb-4" th:each="product : ${products}">
+                    <div class="product-item position-relative bg-light d-flex flex-column text-center h-100">
+                        <!-- Imagen con th:src dinámico -->
+                        <img class="img-fluid mb-4" th:src="@{'/uploads/product/' + ${product.image}}" alt="producto"
+                            style="height: 250px; object-fit: cover;">
+
+                        <h6 class="text-uppercase" th:text="${product.nameProduct}">Nombre Producto</h6>
+                        <h5 class="text-primary mb-3" th:text="'$' + ${product.price}">Precio</h5>
+
+                        <div class="btn-action d-flex justify-content-center mt-auto pb-4">
+                            <a class="btn btn-primary py-2 px-3 me-2" th:href="@{'/cart/add/' + ${product.id}}">
+                                <i class="bi bi-cart-plus"></i> Agregar
+                            </a>
+                            <a class="btn btn-outline-primary py-2 px-3"
+                                th:href="@{'/product-detail'(id=${product.id})}">
+                                <i class="bi bi-eye"></i> Ver
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Productos -->
+
+    <div th:replace="~{fragments/layout :: footer}"></div>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+
+</body>
+
+</html>

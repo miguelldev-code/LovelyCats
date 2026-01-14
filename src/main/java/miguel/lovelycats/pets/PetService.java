@@ -1,47 +1,51 @@
 package miguel.lovelycats.pets;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 @Service
-public class PetService implements IPetService {
+@RequiredArgsConstructor
+public class PetService {
 
-    @Autowired
-    private PetRepository petRepository;
+    private final PetRepository petRepository;
 
-    @Override
     public List<Pet> getPetsByUser(String user) {
         return petRepository.findByUserName(user);
     }
 
-    @Override
+    public List<Pet> getAllPets() {
+        return petRepository.findAll();
+    }
+
     public Optional<Pet> getPetById(long id) {
         return petRepository.findById(id);
     }
 
-    //
-    @Override
     public void updatePet(Pet pet) {
         petRepository.save(pet);
     }
 
-    @Override
-    public void addPet(String name, String namePet, int age, String gender, String description, String status, Date adoptionDate, String image, boolean isDone) {
-        petRepository.save(new Pet(name, namePet, age, gender, description, status, adoptionDate, image, isDone));
+    public void addPet(String namePet, int age, String gender, String description, String status, Date adoptionDate,
+            String image) {
+        Pet pet = new Pet();
+        pet.setNamePet(namePet);
+        pet.setAge(age);
+        pet.setGender(gender);
+        pet.setDescription(description);
+        pet.setStatus(status);
+        pet.setAdoptionDate(adoptionDate);
+        pet.setImage(image);
+        petRepository.save(pet);
     }
 
     public void deletePet(long id) {
-        Optional<Pet> pet = petRepository.findById(id);
-        if (pet.isPresent()) {
-            petRepository.delete(pet.get());
-        }
+        petRepository.deleteById(id);
     }
 
-    @Override
     public void savePet(Pet pet) {
         petRepository.save(pet);
     }

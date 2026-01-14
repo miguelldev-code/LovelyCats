@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white text-center py-4">
+                        <h3 class="mb-0 text-white">Mi Perfil</h3>
+                    </div>
+                    <div class="card-body p-5">
+
+                        <div th:if="${param.success}" class="alert alert-success">
+                            Perfil actualizado correctamente.
+                        </div>
+
+                        <form th:action="@{/profile}" method="post" enctype="multipart/form-data" class="row g-4">
+
+                            <!-- Profile Picture Section -->
+                            <div class="col-12 text-center mb-4">
+                                <div class="position-relative d-inline-block">
+                                    <img th:if="${user.image != null}" th:src="@{'/uploads/user/' + ${user.image}}"
+                                        class="rounded-circle border border-3 border-white shadow"
+                                        style="width: 150px; height: 150px; object-fit: cover;">
+                                    <img th:unless="${user.image != null}" th:src="@{/img/user.jpg}"
+                                        class="rounded-circle border border-3 border-white shadow"
+                                        style="width: 150px; height: 150px; object-fit: cover;">
+
+                                    <label for="file"
+                                        class="position-absolute bottom-0 end-0 bg-primary text-white rounded-circle p-2 shadow"
+                                        style="cursor: pointer;" title="Cambiar foto">
+                                        <i class="bi bi-camera-fill"></i>
+                                    </label>
+                                    <input type="file" id="file" name="file" class="d-none" accept="image/*"
+                                        onchange="previewImage(this)">
+                                </div>
+                                <h4 class="mt-3" th:text="${user.firstName + ' ' + user.lastName}">Nombre Usuario</h4>
+                                <p class="text-muted" th:text="${user.email}">user@example.com</p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="firstName" name="firstName"
+                                    th:value="${user.firstName}" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label">Apellido</label>
+                                <input type="text" class="form-control" id="lastName" name="lastName"
+                                    th:value="${user.lastName}" required>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" th:value="${user.email}" disabled readonly>
+                                <div class="form-text">El email no se puede cambiar.</div>
+                            </div>
+
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn btn-primary py-3 px-5">Guardar Cambios</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: footer}"></div>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+
+    <script>
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    input.previousElementSibling.previousElementSibling.src = e.target.result; // Update img src (hacky DOM traversal, but works with this structure)
+                    // Better: use IDs. But let's assume the previous element is not the img, but the label.
+                    // Structure: img, img (hidden/shown), label, input.
+                    // Actually, let's just reload or trust the user knows what they picked. 
+                    // Or simple valid JS:
+                    var container = input.parentElement;
+                    var imgs = container.getElementsByTagName('img');
+                    for (var i = 0; i < imgs.length; i++) {
+                        imgs[i].src = e.target.result;
+                    }
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</body>
+
+</html>

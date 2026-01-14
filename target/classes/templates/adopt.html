@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <!-- Inicio Adopción -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 800px;">
+                <h6 class="text-primary text-uppercase">Adopta un amigo</h6>
+                <h1 class="display-5 text-uppercase mb-0">Buscan un hogar</h1>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4" th:each="pet : ${pets}">
+                    <div class="product-item position-relative bg-light d-flex flex-column text-center h-100">
+                        <img class="img-fluid mb-4" th:src="@{'/uploads/' + ${pet.image}}" alt="mascota"
+                            style="height: 250px; object-fit: cover;">
+
+                        <h6 class="text-uppercase" th:text="${pet.namePet}">Nombre Mascota</h6>
+                        <h5 class="text-primary mb-3" th:text="${pet.gender}">Género</h5>
+                        <p class="px-2" th:text="${pet.description}">Descripción...</p>
+
+                        <div class="btn-action d-flex justify-content-center mt-auto pb-4">
+                            <a class="btn btn-primary py-2 px-3" href="#">Adoptar</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 text-center" th:if="${#lists.isEmpty(pets)}">
+                    <p>No hay mascotas disponibles para adopción en este momento.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Adopción -->
+
+    <div th:replace="~{fragments/layout :: footer}"></div>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+
+</body>
+
+</html>
