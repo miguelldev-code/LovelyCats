@@ -36,12 +36,17 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/login", "/register", "/products", "/product-detail", "/cart/**")
+                        // Recursos públicos (sin login)
+                        .requestMatchers("/", "/login", "/register", "/products", "/product-detail", "/cart/**",
+                                "/adopt", "/service", "/welcome", "/pet-detail", "/adoption-form", "/list-pets")
                         .permitAll()
-                        .requestMatchers("/welcome", "/adopt").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/admin/**", "/list-pets", "/add-pet", "/update-pet", "/delete-pet",
+                        // Rutas que requieren autenticación explícita
+                        .requestMatchers("/cart/checkout").authenticated()
+                        // Rutas de administración y gestión
+                        .requestMatchers("/admin/**", "/add-pet", "/update-pet", "/delete-pet",
                                 "/list-products", "/add-product", "/update-product", "/delete-product")
                         .hasRole("ADMIN")
+                        // Cualquier otra petición requiere autenticación
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
