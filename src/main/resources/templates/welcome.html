@@ -117,32 +117,48 @@
                 <h6 class="text-primary text-uppercase">Adopción</h6>
                 <h1 class="display-5 text-uppercase mb-0">Buscan un Hogar</h1>
             </div>
-            <div class="row g-5">
-                <div class="col-lg-6" th:each="pet : ${recentPets}">
-                    <div class="blog-item">
-                        <div class="row g-0 bg-light overflow-hidden">
-                            <div class="col-12 col-sm-5 h-100">
-                                <img class="img-fluid h-100"
-                                    th:src="@{'/img/' + ${pet.image != null ? pet.image : 'blog-1.jpg'}}"
-                                    style="object-fit: cover; min-height: 250px;">
-                            </div>
-                            <div class="col-12 col-sm-7 h-100 d-flex flex-column justify-content-center">
-                                <div class="p-4">
-                                    <div class="d-flex mb-3">
-                                        <small class="me-3"><i class="bi bi-bookmarks me-2"></i><span
-                                                th:text="${pet.gender == 'M' ? 'Macho' : 'Hembra'}">Género</span></small>
-                                        <small><i class="bi bi-calendar-date me-2"></i><span
-                                                th:text="${pet.age} + ' años'">Edad</span></small>
+
+            <div id="petCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div th:each="pet, iterStat : ${recentPets}"
+                        th:class="${iterStat.first} ? 'carousel-item active' : 'carousel-item'">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="blog-item bg-light rounded overflow-hidden shadow-sm">
+                                    <div class="row g-0">
+                                        <div class="col-md-6" style="min-height: 350px;">
+                                            <img class="img-fluid w-100 h-100"
+                                                th:src="@{'/img/' + ${pet.image != null ? pet.image : 'blog-1.jpg'}}"
+                                                style="object-fit: cover;">
+                                        </div>
+                                        <div class="col-md-6 d-flex flex-column justify-content-center p-4">
+                                            <div class="d-flex mb-3 text-primary">
+                                                <small class="me-3"><i class="bi bi-bookmarks me-2"></i><span
+                                                        th:text="${pet.gender == 'M' ? 'Macho' : 'Hembra'}">Género</span></small>
+                                                <small><i class="bi bi-calendar-date me-2"></i><span
+                                                        th:text="${pet.age} + ' años'">Edad</span></small>
+                                            </div>
+                                            <h3 class="text-uppercase mb-3" th:text="${pet.namePet}">Nombre</h3>
+                                            <p th:text="${pet.description}">Descripción...</p>
+                                            <div class="mt-3">
+                                                <a class="btn btn-primary py-2 px-4" th:href="@{/adopt}">¡Adóptame! <i
+                                                        class="bi bi-heart ms-2"></i></a>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <h5 class="text-uppercase mb-3" th:text="${pet.namePet}">Nombre Mascota</h5>
-                                    <p th:text="${#strings.abbreviate(pet.description, 50)}">Descripción corta...</p>
-                                    <a class="text-primary text-uppercase" th:href="@{/adopt}">Leer Más <i
-                                            class="bi bi-chevron-right"></i></a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#petCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-primary rounded-circle p-3" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#petCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-primary rounded-circle p-3" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
             </div>
         </div>
     </div>
@@ -156,38 +172,50 @@
                 <h1 class="display-5 text-uppercase mb-0">Nuestras Soluciones</h1>
             </div>
             <div class="row g-5">
-                <div class="col-md-4">
-                    <div class="service-item bg-light d-flex p-4">
-                        <i class="flaticon-house display-1 text-primary me-4"></i>
-                        <div>
-                            <h5 class="text-uppercase mb-3">Hospedaje Felino</h5>
-                            <p>Servicio de cuidado premium para cuando sales de viaje.</p>
-                            <a class="text-primary text-uppercase" href="">Ver Más<i
-                                    class="bi bi-chevron-right"></i></a>
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-item bg-light d-flex flex-column text-center p-4 h-100 shadow-sm rounded">
+                        <div class="mb-3">
+                            <i class="flaticon-house display-3 text-primary"></i>
                         </div>
+                        <h5 class="text-uppercase mb-3">Hospedaje</h5>
+                        <p class="flex-grow-1">Tu gato disfrutará de unas vacaciones seguras y cómodas mientras tú estás
+                            fuera.</p>
+                        <a class="btn btn-outline-primary mt-3" href="/service/boarding">Ver Detalles <i
+                                class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
-                <!-- Más servicios... -->
-                <div class="col-md-4">
-                    <div class="service-item bg-light d-flex p-4">
-                        <i class="flaticon-food display-1 text-primary me-4"></i>
-                        <div>
-                            <h5 class="text-uppercase mb-3">Nutrición</h5>
-                            <p>Consultoría alimenticia para la salud de tu gato.</p>
-                            <a class="text-primary text-uppercase" href="">Ver Más<i
-                                    class="bi bi-chevron-right"></i></a>
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-item bg-light d-flex flex-column text-center p-4 h-100 shadow-sm rounded">
+                        <div class="mb-3">
+                            <i class="flaticon-food display-3 text-primary"></i>
                         </div>
+                        <h5 class="text-uppercase mb-3">Nutrición</h5>
+                        <p class="flex-grow-1">Planes alimenticios personalizados para la salud y vitalidad de tu
+                            felino.</p>
+                        <a class="btn btn-outline-primary mt-3" href="/service/nutrition">Ver Detalles <i
+                                class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="service-item bg-light d-flex p-4">
-                        <i class="flaticon-grooming display-1 text-primary me-4"></i>
-                        <div>
-                            <h5 class="text-uppercase mb-3">Estética</h5>
-                            <p>Baño y corte profesional para que luzcan radiantes.</p>
-                            <a class="text-primary text-uppercase" href="">Ver Más<i
-                                    class="bi bi-chevron-right"></i></a>
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-item bg-light d-flex flex-column text-center p-4 h-100 shadow-sm rounded">
+                        <div class="mb-3">
+                            <i class="flaticon-doctor display-3 text-primary"></i>
                         </div>
+                        <h5 class="text-uppercase mb-3">Veterinaria</h5>
+                        <p class="flex-grow-1">Atención médica especializada, vacunación y chequeos generales.</p>
+                        <a class="btn btn-outline-primary mt-3" href="/service/veterinary">Ver Detalles <i
+                                class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-item bg-light d-flex flex-column text-center p-4 h-100 shadow-sm rounded">
+                        <div class="mb-3">
+                            <i class="flaticon-grooming display-3 text-primary"></i>
+                        </div>
+                        <h5 class="text-uppercase mb-3">Spa & Estética</h5>
+                        <p class="flex-grow-1">Baños relajantes y cortes de pelo para que luzcan radiantes.</p>
+                        <a class="btn btn-outline-primary mt-3" href="/service/spa">Ver Detalles <i
+                                class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
