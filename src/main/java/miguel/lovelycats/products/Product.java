@@ -18,11 +18,12 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; // Usar id primitivo o Long, mantengo int por compatibilidad
+    private Long id; // Corregido a Long para coincidir con JpaRepository
 
     private String userName; // FK logica a usuario
     private String nameProduct;
     private String description;
     private Long price;
     private String image;
+    private String category;
 }

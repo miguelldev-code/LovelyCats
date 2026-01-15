@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.net.MalformedURLException;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -24,8 +25,24 @@ public class ProductController {
     private final UploadFileService uploadFileService;
 
     @GetMapping({ "/products", "/list-products" })
-    public String listProducts(Model model) {
-        model.addAttribute("products", productService.findAll());
+    public String listProducts(Model model,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String category) {
+
+        List<Product> products;
+
+        if (keyword != null && !keyword.isEmpty()) {
+            products = productService.findByNameProductContainingIgnoreCase(keyword);
+        } else if (category != null && !category.isEmpty()) {
+            products = productService.findByCategory(category);
+        } else {
+            products = productService.findAll();
+        }
+
+        model.addAttribute("products", products);
+        model.addAttribute("categories", List.of("Alimentos", "Juguetes", "Accesorios", "Ropa", "Higiene")); // Hardcoded
+                                                                                                             // for
+                                                                                                             // simplicity/demo
         return "products";
     }
 

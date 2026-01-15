@@ -16,7 +16,7 @@ public class ProductService {
         return productRepository.findByUserName(user);
     }
 
-    public Optional<Product> getProductById(long id) {
+    public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
     }
 
@@ -44,5 +44,13 @@ public class ProductService {
 
     public List<Product> findAll() {
         return productRepository.findAll();
+    }
+
+    public List<Product> findByNameProductContainingIgnoreCase(String name) {
+        return productRepository.findByNameProductContainingIgnoreCase(name);
+    }
+
+    public List<Product> findByCategory(String category) {
+        return productRepository.findByCategory(category);
     }
 }
