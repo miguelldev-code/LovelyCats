@@ -30,7 +30,7 @@ public class CartController {
     }
 
     @GetMapping("/add/{id}")
-    public String addToCart(@PathVariable long id, HttpSession session) {
+    public String addToCart(@PathVariable Long id, HttpSession session) {
         Optional<Product> productOpt = productService.getProductById(id);
         if (productOpt.isPresent()) {
             List<CartItem> cart = getCartFromSession(session);
@@ -38,7 +38,7 @@ public class CartController {
 
             boolean exists = false;
             for (CartItem item : cart) {
-                if (item.getProduct().getId() == product.getId()) { // == para primitivos/wrapper
+                if (item.getProduct().getId().equals(product.getId())) { // Use .equals for Long objects
                     item.setQuantity(item.getQuantity() + 1);
                     exists = true;
                     break;
@@ -53,9 +53,9 @@ public class CartController {
     }
 
     @GetMapping("/remove/{id}")
-    public String removeFromCart(@PathVariable long id, HttpSession session) {
+    public String removeFromCart(@PathVariable Long id, HttpSession session) {
         List<CartItem> cart = getCartFromSession(session);
-        cart.removeIf(item -> item.getProduct().getId() == id);
+        cart.removeIf(item -> item.getProduct().getId().equals(id));
         return "redirect:/cart";
     }
 
