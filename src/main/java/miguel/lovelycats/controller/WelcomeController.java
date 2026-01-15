@@ -61,4 +61,24 @@ public class WelcomeController {
     public String service() {
         return "service";
     }
+
+    @GetMapping("/service/veterinary")
+    public String serviceVeterinary() {
+        return "service-veterinary";
+    }
+
+    @GetMapping("/service/boarding")
+    public String serviceBoarding() {
+        return "service-boarding";
+    }
+
+    @GetMapping("/service/spa")
+    public String serviceSpa() {
+        return "service-spa";
+    }
+
+    @GetMapping("/service/nutrition")
+    public String serviceNutrition() {
+        return "service-nutrition";
+    }
 }

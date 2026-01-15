@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <!-- Header -->
+    <div class="container-fluid bg-dark text-light py-5 mb-5 hero-header">
+        <div class="container py-5 text-center">
+            <h1 class="display-3 text-uppercase mb-3">Clínica Veterinaria</h1>
+            <p class="lead">Cuidamos la salud de tu mascota con tecnología de punta y amor incondicional.</p>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="container py-5">
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-6">
+                <img class="img-fluid rounded shadow"
+                    src="https://images.unsplash.com/photo-1628009368231-760335272113?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                    alt="Veterinary">
+            </div>
+            <div class="col-lg-6">
+                <h2 class="text-uppercase mb-4">Servicios Médicos Integrales</h2>
+                <p>Nuestro equipo de especialistas está preparado para atender desde chequeos rutinarios hasta cirugías
+                    complejas. Contamos con laboratorio propio y salas de imagenología.</p>
+                <ul class="list-unstyled mt-4">
+                    <li class="mb-2"><i class="bi bi-check-circle text-primary me-2"></i>Consultas Generales y
+                        Especializadas</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-primary me-2"></i>Vacunación y Desparasitación
+                    </li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-primary me-2"></i>Cirugía General y Ortopédica
+                    </li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-primary me-2"></i>Urgencias 24 Horas</li>
+                </ul>
+                <a href="https://wa.me/573001234567" class="btn btn-outline-primary mt-3">Agendar Cita Médica</a>
+            </div>
+        </div>
+
+        <!-- Team -->
+        <div class="text-center mb-5">
+            <h5 class="text-primary text-uppercase">Nuestro Equipo</h5>
+            <h1 class="mb-5">Conoce a los Doctores</h1>
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="team-item bg-light rounded text-center py-5 px-3">
+                        <h4 class="text-uppercase">Dr. Juan Pérez</h4>
+                        <p class="m-0">Cirujano Especialista</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="team-item bg-light rounded text-center py-5 px-3">
+                        <h4 class="text-uppercase">Dra. Ana López</h4>
+                        <p class="m-0">Medicina Interna</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="team-item bg-light rounded text-center py-5 px-3">
+                        <h4 class="text-uppercase">Dr. Carlos Ruiz</h4>
+                        <p class="m-0">Emergencias</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: footer}"></div>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+
+</html>

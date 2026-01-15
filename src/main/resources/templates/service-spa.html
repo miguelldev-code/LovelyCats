@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <!-- Header -->
+    <div class="container-fluid bg-dark text-light py-5 mb-5 hero-header">
+        <div class="container py-5 text-center">
+            <h1 class="display-3 text-uppercase mb-3">Spa & Peluquería</h1>
+            <p class="lead">Porque ellos también merecen un día de relajación y belleza.</p>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="container py-5">
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-5">
+                <img class="img-fluid rounded shadow"
+                    src="https://images.unsplash.com/photo-1516002052441-2a1382845c85?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                    alt="Spa">
+            </div>
+            <div class="col-lg-7">
+                <h2 class="text-uppercase mb-4">Estética Profesional</h2>
+                <p class="mb-4">Nuestros estilistas caninos y felinos son expertos en el manejo de todo tipo de mantos.
+                    Utilizamos productos hipoalergénicos de alta calidad para cuidar la piel y el pelaje de tu mascota.
+                </p>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center bg-light p-3 rounded">
+                            <i class="bi bi-scissors fs-2 text-primary me-3"></i>
+                            <h5 class="mb-0">Corte de Raza</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center bg-light p-3 rounded">
+                            <i class="bi bi-droplet-fill fs-2 text-primary me-3"></i>
+                            <h5 class="mb-0">Baño Medicado</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center bg-light p-3 rounded">
+                            <i class="bi bi-brightness-high fs-2 text-primary me-3"></i>
+                            <h5 class="mb-0">Limpieza Dental</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center bg-light p-3 rounded">
+                            <i class="bi bi-flower1 fs-2 text-primary me-3"></i>
+                            <h5 class="mb-0">Aromaterapia</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <h3>¡Consiente a tu amigo peludo hoy mismo!</h3>
+            <a href="https://wa.me/573001234567" class="btn btn-primary btn-lg mt-3 rounded-pill px-5">Agendar Cita de
+                Spa</a>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: footer}"></div>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+
+</html>

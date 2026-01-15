@@ -6,29 +6,76 @@
 <body>
     <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
-    <div class="container-fluid bg-light py-5">
+    <!-- Services Header -->
+    <div class="container-fluid bg-primary py-5 mb-5 hero-header">
         <div class="container py-5">
-            <h1 class="display-4 text-center mb-5">Nuestros Servicios</h1>
-            <div class="row">
-                <div class="col-md-4 text-center">
-                    <div class="service-item p-4">
-                        <i class="bi bi-heart-fill display-2 text-primary"></i>
-                        <h4 class="mt-3">Adopción</h4>
-                        <p>Encuentra a tu compañero perfecto.</p>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center text-white">
+                    <h1 class="display-3 text-uppercase mb-3">Servicios Integrales</h1>
+                    <p class="fs-4">Todo lo que tu mascota necesita para una vida feliz y saludable, en un solo lugar.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Grid -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="row g-5">
+                <!-- Veterinaria -->
+                <div class="col-lg-6 col-md-6">
+                    <div class="service-item bg-light d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon bg-white text-primary rounded-circle mx-auto my-4 shadow-sm"
+                            style="width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
+                            <i class="bi bi-hospital"></i>
+                        </div>
+                        <h4 class="mb-3 text-uppercase">Clínica Veterinaria</h4>
+                        <p class="m-0 px-4">Expertos en salud animal disponibles 24/7 para emergencias y consultas.</p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4 mt-4 mb-4 mx-auto"
+                            th:href="@{/service/veterinary}">Ver Servicios <i class="bi bi-arrow-right ms-2"></i></a>
                     </div>
                 </div>
-                <div class="col-md-4 text-center">
-                    <div class="service-item p-4">
-                        <i class="bi bi-cart-fill display-2 text-primary"></i>
-                        <h4 class="mt-3">Tienda</h4>
-                        <p>Los mejores productos para tu mascota.</p>
+
+                <!-- Hospedaje -->
+                <div class="col-lg-6 col-md-6">
+                    <div class="service-item bg-light d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon bg-white text-primary rounded-circle mx-auto my-4 shadow-sm"
+                            style="width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
+                            <i class="bi bi-house-heart"></i>
+                        </div>
+                        <h4 class="mb-3 text-uppercase">Hospedaje de Lujo</h4>
+                        <p class="m-0 px-4">Un segundo hogar seguro y divertido para cuando tengas que viajar.</p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4 mt-4 mb-4 mx-auto"
+                            th:href="@{/service/boarding}">Conocer Hotel <i class="bi bi-arrow-right ms-2"></i></a>
                     </div>
                 </div>
-                <div class="col-md-4 text-center">
-                    <div class="service-item p-4">
-                        <i class="bi bi-shield-fill display-2 text-primary"></i>
-                        <h4 class="mt-3">Cuidado</h4>
-                        <p>Consejos y guías para el cuidado.</p>
+
+                <!-- Spa y Belleza -->
+                <div class="col-lg-6 col-md-6">
+                    <div class="service-item bg-light d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon bg-white text-primary rounded-circle mx-auto my-4 shadow-sm"
+                            style="width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
+                            <i class="bi bi-scissors"></i>
+                        </div>
+                        <h4 class="mb-3 text-uppercase">Spa & Peluquería</h4>
+                        <p class="m-0 px-4">Baños relajantes, cortes de estilo y tratamientos de belleza.</p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4 mt-4 mb-4 mx-auto"
+                            th:href="@{/service/spa}">Reservar Spa <i class="bi bi-arrow-right ms-2"></i></a>
+                    </div>
+                </div>
+
+                <!-- Nutrición -->
+                <div class="col-lg-6 col-md-6">
+                    <div class="service-item bg-light d-flex flex-column justify-content-center text-center rounded">
+                        <div class="service-icon bg-white text-primary rounded-circle mx-auto my-4 shadow-sm"
+                            style="width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
+                            <i class="bi bi-egg-fried"></i>
+                        </div>
+                        <h4 class="mb-3 text-uppercase">Nutrición Especializada</h4>
+                        <p class="m-0 px-4">Planes dietéticos personalizados y control de peso.</p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4 mt-4 mb-4 mx-auto"
+                            th:href="@{/service/nutrition}">Ver Planes <i class="bi bi-arrow-right ms-2"></i></a>
                     </div>
                 </div>
             </div>

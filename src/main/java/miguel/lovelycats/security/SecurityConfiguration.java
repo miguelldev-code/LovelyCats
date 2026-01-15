@@ -38,7 +38,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         // Recursos públicos (sin login)
                         .requestMatchers("/", "/login", "/register", "/products", "/product-detail", "/cart/**",
-                                "/adopt", "/service", "/welcome", "/pet-detail", "/adoption-form", "/list-pets")
+                                "/adopt", "/service/**", "/welcome", "/pet-detail", "/adoption-form", "/list-pets")
                         .permitAll()
                         // Rutas que requieren autenticación explícita
                         .requestMatchers("/cart/checkout").authenticated()

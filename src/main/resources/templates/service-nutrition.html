@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <!-- Header -->
+    <div class="container-fluid bg-dark text-light py-5 mb-5 hero-header">
+        <div class="container py-5 text-center">
+            <h1 class="display-3 text-uppercase mb-3">Nutrición Especializada</h1>
+            <p class="lead">La salud empieza por el plato. Descubre el plan ideal para tu mascota.</p>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="container py-5">
+        <div class="row mb-5">
+            <div class="col-lg-6 order-lg-2">
+                <img class="img-fluid rounded shadow"
+                    src="https://images.unsplash.com/photo-1589924691195-41432c84c161?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                    alt="Nutrition">
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <h2 class="text-uppercase mb-4">Asesoría Nutricional</h2>
+                <p>La obesidad y las alergias alimentarias son problemas comunes que pueden acortar la vida de tu
+                    mascota. Nuestros expertos te ayudarán a diseñar una dieta equilibrada adaptada a su edad, raza y
+                    condición física.</p>
+
+                <div class="accordion mt-4" id="nutritionAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne">
+                                Dieta BARF / Natural
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show"
+                            data-bs-parent="#nutritionAccordion">
+                            <div class="accordion-body">
+                                Planes de alimentación cruda biológicamente apropiada, formulados para maximizar la
+                                energía y salud dental.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo">
+                                Control de Peso
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#nutritionAccordion">
+                            <div class="accordion-body">
+                                Programas para mascotas con sobrepeso, combinando dieta estricta con rutinas de
+                                ejercicio seguras.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <p class="fs-5">No adivines qué es lo mejor para ellos. Déjate guiar por profesionales.</p>
+            <a href="https://wa.me/573001234567" class="btn btn-outline-success rounded-pill px-4">Solicitar Valoración
+                Nutricional</a>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: footer}"></div>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+
+</html>
