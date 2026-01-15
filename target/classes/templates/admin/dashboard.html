@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar (responsive) -->
+            <div class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse shadow-sm" style="min-height: 100vh;">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active fw-bold text-primary" aria-current="page" href="/admin/dashboard">
+                                <i class="bi bi-speedometer2 me-2"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/admin/products">
+                                <i class="bi bi-cart me-2"></i>
+                                Productos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/admin/pets">
+                                <i class="bi bi-heart me-2"></i>
+                                Mascotas
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/admin/users">
+                                <i class="bi bi-people me-2"></i>
+                                Usuarios
+                            </a>
+                        </li>
+                    </ul>
+
+                    <h6
+                        class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Reportes Escritos</span>
+                        <a class="link-secondary" href="#" aria-label="Add a new report">
+                            <i class="bi bi-plus-circle"></i>
+                        </a>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="#"
+                                onclick="alert('Funcionalidad de reporte en desarrollo')">
+                                <i class="bi bi-file-earmark-text me-2"></i>
+                                Ventas del Mes
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Dashboard Administrativo</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary"
+                                onclick="shareDashboard()">Compartir</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary"
+                                onclick="exportReport()">Exportar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card shadow-sm border-0 bg-light">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 text-secondary"><i class="bi bi-lightning-charge me-2"></i>Acciones
+                                    Rápidas</h5>
+                                <div>
+                                    <a href="/add-product" class="btn btn-primary me-2"><i
+                                            class="bi bi-plus-lg me-1"></i> Nuevo Producto</a>
+                                    <a href="/add-pet" class="btn btn-success"><i class="bi bi-plus-lg me-1"></i> Nueva
+                                        Mascota</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="row g-4 mb-4">
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white h-100 shadow-sm border-0">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="me-3">
+                                        <div class="text-white-75 small text-uppercase fw-bold">Usuarios Totales</div>
+                                        <div class="fs-4 fw-bold" th:text="${totalUsers}">0</div>
+                                    </div>
+                                    <i class="bi bi-people-fill fs-1 text-white-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-success text-white h-100 shadow-sm border-0">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="me-3">
+                                        <div class="text-white-75 small text-uppercase fw-bold">Inventario (Valor)</div>
+                                        <div class="fs-4 fw-bold"
+                                            th:text="'$' + ${#numbers.formatInteger(totalInventoryValue, 0, 'POINT')}">0
+                                        </div>
+                                    </div>
+                                    <i class="bi bi-cash-coin fs-1 text-white-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-warning text-dark h-100 shadow-sm border-0">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="me-3">
+                                        <div class="text-dark-75 small text-uppercase fw-bold">Mascotas</div>
+                                        <div class="fs-4 fw-bold" th:text="${totalPets}">0</div>
+                                    </div>
+                                    <i class="bi bi-heart-fill fs-1 text-dark-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-info text-white h-100 shadow-sm border-0">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="me-3">
+                                        <div class="text-white-75 small text-uppercase fw-bold">Productos</div>
+                                        <div class="fs-4 fw-bold" th:text="${totalProducts}">0</div>
+                                    </div>
+                                    <i class="bi bi-box-seam fs-1 text-white-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="row">
+                    <div class="col-lg-8 mb-4">
+                        <div class="card shadow-sm border-0">
+                            <div
+                                class="card-header bg-transparent border-bottom-0 py-3 d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Resumen de Actividad (Simulado)</h5>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="updateChartData()"><i
+                                        class="bi bi-arrow-repeat"></i> Actualizar</button>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="activityChart" height="150"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-header bg-transparent border-bottom-0 py-3">
+                                <h5 class="mb-0">Distribución de Mascotas</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="petsChart" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: footer}"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Export Functionality
+        function exportReport() {
+            window.print();
+        }
+
+        // Share Functionality
+        function shareDashboard() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'LovelyCats Dashboard',
+                    text: 'Mira las estadísticas actuales plataforma LovelyCats',
+                    url: window.location.href,
+                });
+            } else {
+                alert('Enlace copiado al portapapeles!');
+            }
+        }
+
+        // Chart.js Configuration
+        // Activity Chart
+        const ctxActivity = document.getElementById('activityChart').getContext('2d');
+        const activityChart = new Chart(ctxActivity, {
+            type: 'line',
+            data: {
+                labels: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
+                datasets: [{
+                    label: 'Visitas',
+                    data: [150, 230, 180, 320, 290, 450, 410],
+                    borderColor: '#0d6efd',
+                    tension: 0.4,
+                    fill: false
+                }, {
+                    label: 'Adopciones',
+                    data: [2, 5, 3, 8, 6, 12, 10],
+                    borderColor: '#ffc107',
+                    tension: 0.4,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' }
+                }
+            }
+        });
+
+        // Dynamic Update Simulation
+        function updateChartData() {
+            const newData = Array.from({ length: 7 }, () => Math.floor(Math.random() * 500));
+            activityChart.data.datasets[0].data = newData;
+            activityChart.update();
+        }
+
+        // Pets Chart
+        const ctxPets = document.getElementById('petsChart').getContext('2d');
+        const petsChart = new Chart(ctxPets, {
+            type: 'doughnut',
+            data: {
+                labels: ['Gatos', 'Perros', 'Otros'],
+                datasets: [{
+                    data: [12, 19, 3], // Mock data
+                    backgroundColor: ['#0d6efd', '#198754', '#ffc107']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
