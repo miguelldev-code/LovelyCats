@@ -31,4 +31,10 @@ public class Pet {
     private String status;
     private Date adoptionDate;
     private String image;
+
+    // Nuevos campos para mejorar la información
+    private String breed; // Raza
+    private boolean vaccinated;
+    private boolean sterilized;
+    private String location;
 }

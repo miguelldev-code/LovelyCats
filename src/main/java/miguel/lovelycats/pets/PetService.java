@@ -21,7 +21,7 @@ public class PetService {
         return petRepository.findAll();
     }
 
-    public Optional<Pet> getPetById(long id) {
+    public Optional<Pet> getPetById(Long id) {
         return petRepository.findById(id);
     }
 

@@ -21,6 +21,18 @@ public class PetController {
         return "adopt";
     }
 
+    @GetMapping("/pet-detail")
+    public String petDetail(@org.springframework.web.bind.annotation.RequestParam Long id, Model model) {
+        petService.getPetById(id).ifPresent(pet -> model.addAttribute("pet", pet));
+        return "pet-detail";
+    }
+
+    @GetMapping("/adoption-form")
+    public String adoptionForm(@org.springframework.web.bind.annotation.RequestParam Long id, Model model) {
+        petService.getPetById(id).ifPresent(pet -> model.addAttribute("pet", pet));
+        return "adoption-form";
+    }
+
     // Compatibilidad
     @GetMapping("/adopte")
     public String redirectAdopt() {
