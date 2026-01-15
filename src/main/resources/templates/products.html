@@ -8,37 +8,80 @@
     <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
     <!-- Inicio Productos -->
+    <!-- Inicio Productos -->
     <div class="container-fluid py-5">
         <div class="container">
-            <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 800px;">
-                <h6 class="text-primary text-uppercase">Nuestros Productos</h6>
-                <h1 class="display-5 text-uppercase mb-0">Lo mejor para tu mascota</h1>
-            </div>
+            <div class="row">
+                <!-- Sidebar con Filtros -->
+                <div class="col-lg-3 mb-5">
+                    <div class="bg-light p-4 mb-4">
+                        <h4 class="text-uppercase mb-4">Buscar</h4>
+                        <form action="/products" method="get">
+                            <div class="input-group">
+                                <input type="text" class="form-control p-3" name="keyword"
+                                    placeholder="Nombre del producto">
+                                <button class="btn btn-primary"><i class="bi bi-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
 
-            <div class="row"> <!-- Grid en lugar de carousel para mejor visualización en catálogo -->
-                <div class="col-lg-4 col-md-6 mb-4" th:each="product : ${products}">
-                    <div class="product-item position-relative bg-light d-flex flex-column text-center h-100">
-                        <!-- Imagen con th:src dinámico -->
-                        <img class="img-fluid mb-4" th:src="@{'/uploads/product/' + ${product.image}}" alt="producto"
-                            style="height: 250px; object-fit: cover;">
+                    <div class="bg-light p-4 mb-4">
+                        <h4 class="text-uppercase mb-4">Categorías</h4>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="h6 text-secondary text-primary-hover mb-2" href="/products"><i
+                                    class="bi bi-caret-right me-2"></i>Todos</a>
+                            <a class="h6 text-secondary text-primary-hover mb-2" th:each="cat : ${categories}"
+                                th:href="@{/products(category=${cat})}" th:text="${cat}"><i
+                                    class="bi bi-caret-right me-2"></i>Categoría</a>
+                        </div>
+                    </div>
+                </div>
 
-                        <h6 class="text-uppercase" th:text="${product.nameProduct}">Nombre Producto</h6>
-                        <h5 class="text-primary mb-3" th:text="'$' + ${product.price}">Precio</h5>
+                <!-- Listado de Productos -->
+                <div class="col-lg-9">
+                    <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 800px;">
+                        <h6 class="text-primary text-uppercase">Nuestros Productos</h6>
+                        <h1 class="display-5 text-uppercase mb-0">Lo mejor para tu mascota</h1>
+                    </div>
 
-                        <div class="btn-action d-flex justify-content-center mt-auto pb-4">
-                            <a class="btn btn-primary py-2 px-3 me-2" th:href="@{'/cart/add/' + ${product.id}}">
-                                <i class="bi bi-cart-plus"></i> Agregar
-                            </a>
-                            <a class="btn btn-outline-primary py-2 px-3"
-                                th:href="@{'/product-detail'(id=${product.id})}">
-                                <i class="bi bi-eye"></i> Ver
-                            </a>
+                    <div class="row gx-4 gy-5"> <!-- Grid mejorado -->
+                        <div class="col-lg-4 col-md-6 mb-4" th:each="product : ${products}">
+                            <div
+                                class="product-item position-relative bg-light d-flex flex-column text-center h-100 shadow-sm rounded overflow-hidden">
+                                <!-- Imagen con relación de aspecto controlada -->
+                                <div class="product-img position-relative overflow-hidden">
+                                    <img class="img-fluid w-100" th:src="@{'/uploads/product/' + ${product.image}}"
+                                        alt="producto" style="height: 250px; object-fit: cover;">
+                                    <div class="product-action">
+                                        <a class="btn btn-outline-light btn-square"
+                                            th:href="@{'/cart/add/' + ${product.id}}"><i
+                                                class="bi bi-cart-plus"></i></a>
+                                        <a class="btn btn-outline-light btn-square"
+                                            th:href="@{'/product-detail'(id=${product.id})}"><i
+                                                class="bi bi-eye"></i></a>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 mt-auto">
+                                    <h6 class="text-uppercase mb-1" th:text="${product.nameProduct}">Nombre Producto
+                                    </h6>
+                                    <h5 class="text-primary mb-0" th:text="'$' + ${product.price}">Precio</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mensaje si no hay productos -->
+                        <div class="col-12 text-center" th:if="${products.empty}">
+                            <div class="alert alert-info">No se encontraron productos con los criterios seleccionados.
+                            </div>
+                            <a href="/products" class="btn btn-primary">Ver todos los productos</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Fin Productos -->
     <!-- Fin Productos -->
 
     <div th:replace="~{fragments/layout :: footer}"></div>

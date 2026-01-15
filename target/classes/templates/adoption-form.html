@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <!-- Inicio Formulario Adopción -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-lg rounded-lg overflow-hidden">
+                    <div class="card-header bg-primary text-white text-center py-4">
+                        <h3 class="mb-0 text-white text-uppercase">Solicitud de Adopción</h3>
+                        <p class="mb-0 mt-2">Estás a un paso de cambiar una vida</p>
+                    </div>
+
+                    <div class="card-body p-5">
+                        <div class="text-center mb-5" th:if="${pet != null}">
+                            <img th:src="@{'/uploads/' + ${pet.image}}" class="rounded-circle shadow-sm mb-3"
+                                style="width: 120px; height: 120px; object-fit: cover;">
+                            <h4 th:text="'Interesado en: ' + ${pet.namePet}">Interesado en Mascota</h4>
+                            <span class="badge bg-light text-dark border" th:text="${pet.breed}">Raza</span>
+                        </div>
+
+                        <div class="alert alert-info mb-4">
+                            <h5 class="alert-heading"><i class="bi bi-shield-check me-2"></i>Requisitos Básicos</h5>
+                            <ul class="mb-0 ps-3">
+                                <li>Ser mayor de edad.</li>
+                                <li>Vivir en un lugar apto para mascotas (ventanas seguras).</li>
+                                <li>Compromiso de esterilización y vacunación al día.</li>
+                                <li>Solvencia económica para su manutención.</li>
+                            </ul>
+                        </div>
+
+                        <p class="text-muted text-center mb-4">
+                            Para agilizar el proceso, contáctanos directamente por WhatsApp. Nuestro equipo de
+                            adopciones te hará unas breves preguntas.
+                        </p>
+
+                        <div class="d-grid gap-2 col-md-8 mx-auto">
+                            <!-- Enlace dinámico a WhatsApp -->
+                            <a th:href="'https://wa.me/573001234567?text=Hola,%20estoy%20interesado%20en%20adoptar%20a%20' + ${pet.namePet} + '.%20He%20leído%20los%20requisitos%20básicos.'"
+                                target="_blank" class="btn btn-success btn-lg py-3 shadow-sm">
+                                <i class="bi bi-whatsapp me-2"></i> Contactar por WhatsApp
+                            </a>
+
+                            <a href="/adopt" class="btn btn-outline-secondary mt-2">Cancelar</a>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light text-center py-3">
+                        <small class="text-muted">Nos pondremos en contacto contigo lo antes posible.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Formulario Adopción -->
+
+    <div th:replace="~{fragments/layout :: footer}"></div>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+
+</body>
+
+</html>

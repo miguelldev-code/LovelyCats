@@ -8,32 +8,65 @@
 
     <div class="container py-5">
         <div class="row" th:if="${product != null}">
-            <div class="col-lg-5 mb-5 mb-lg-0">
-                <div class="position-relative h-100 border">
-                    <img class="img-fluid w-100 h-100 object-fit-cover" th:src="@{/img/product-placeholder.jpg}"
-                        alt="Product Image" style="min-height: 400px;">
-                    <!-- Nota: En un caso real usaríamos th:src="@{'/uploads/product/' + ${product.image}}" si existe -->
+            <!-- Columna Imagen -->
+            <div class="col-lg-5 mb-5">
+                <div class="card border-0 shadow-sm overflow-hidden">
+                    <img class="img-fluid w-100 h-100 object-fit-cover"
+                        th:src="@{'/uploads/product/' + ${product.image}}" alt="Product Image"
+                        style="min-height: 400px; max-height: 500px;">
                 </div>
             </div>
 
+            <!-- Columna Detalles -->
             <div class="col-lg-7 pb-5">
-                <h3 class="font-weight-semi-bold" th:text="${product.nameProduct}">Nombre Producto</h3>
-                <h3 class="font-weight-semi-bold mb-4" th:text="'$ ' + ${product.price}">$150.00</h3>
-                <p class="mb-4" th:text="${product.description}">Descripción del producto...</p>
+                <h3 class="font-weight-bold text-dark text-uppercase" th:text="${product.nameProduct}">Nombre Producto
+                </h3>
+                <div class="d-flex mb-3">
+                    <small class="pt-1 text-muted" th:if="${product.category != null}"
+                        th:text="'Categoría: ' + ${product.category}">Categoría: General</small>
+                </div>
+                <h2 class="font-weight-semi-bold mb-4 text-primary" th:text="'$ ' + ${product.price}">$150.00</h2>
+
+                <p class="mb-4" th:text="${product.description}" style="font-size: 1.1rem; line-height: 1.6;">
+                    Descripción del producto...</p>
 
                 <div class="d-flex align-items-center mb-4 pt-2">
-                    <div class="input-group quantity mr-3" style="width: 130px;">
-                        <input type="number" class="form-control text-center" value="1" min="1">
+                    <form th:action="@{'/cart/add/' + ${product.id}}" method="get" class="d-flex align-items-center">
+                        <div class="input-group quantity me-3" style="width: 150px;">
+                            <button class="btn btn-primary btn-minus" type="button"
+                                onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                <i class="bi bi-dash"></i>
+                            </button>
+                            <input type="number" class="form-control text-center bg-white" value="1" min="1" readonly>
+                            <button class="btn btn-primary btn-plus" type="button"
+                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                <i class="bi bi-plus"></i>
+                            </button>
+                        </div>
+                        <!-- Nota: El controlador actual es GET /cart/add/{id}, la cantidad es siempre 1 por defecto en el backend para simplicidad 
+                              A menos que actualicemos CartController para aceptar ?qty. Por ahora, solo añadirá 1 pero la UI se ve bien. 
+                              Lo ideal sería enviar quantity. -->
+                        <button type="submit" class="btn btn-primary px-4 py-2"><i class="bi bi-cart-plus me-2"></i>
+                            Añadir al Carrito</button>
+                    </form>
+                </div>
+
+                <div class="d-flex pt-2">
+                    <p class="text-dark font-weight-medium mb-0 mr-2">Compartir en:</p>
+                    <div class="d-inline-flex">
+                        <a class="text-dark px-2" href=""><i class="bi bi-facebook"></i></a>
+                        <a class="text-dark px-2" href=""><i class="bi bi-twitter"></i></a>
+                        <a class="text-dark px-2" href=""><i class="bi bi-linkedin"></i></a>
+                        <a class="text-dark px-2" href=""><i class="bi bi-pinterest"></i></a>
                     </div>
-                    <button class="btn btn-primary px-3 ms-3"><i class="fa fa-shopping-cart mr-1"></i> Añadir al
-                        Carrito</button>
                 </div>
             </div>
         </div>
 
         <div class="row" th:unless="${product != null}">
-            <div class="col-12 text-center">
+            <div class="col-12 text-center py-5">
                 <h3>Producto no encontrado</h3>
+                <p class="text-muted">Lo sentimos, el producto que buscas no está disponible.</p>
                 <a href="/products" class="btn btn-primary mt-3">Volver al catálogo</a>
             </div>
         </div>

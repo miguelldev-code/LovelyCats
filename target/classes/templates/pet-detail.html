@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <!-- Inicio Detalles Mascota -->
+    <div class="container py-5">
+        <div class="row" th:if="${pet != null}">
+            <!-- Columna Imagen -->
+            <div class="col-lg-5 mb-5">
+                <div class="card border-0 shadow-sm overflow-hidden" style="border-radius: 15px;">
+                    <img class="img-fluid w-100 h-100 object-fit-cover" th:src="@{'/uploads/' + ${pet.image}}"
+                        alt="Pet Image" style="min-height: 400px; max-height: 500px;">
+                    <!-- Badge de estado -->
+                    <div class="position-absolute top-0 start-0 m-3">
+                        <span class="badge bg-success px-3 py-2 text-uppercase"
+                            th:text="${pet.status}">Disponible</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna Detalles -->
+            <div class="col-lg-7 pb-5">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h1 class="display-4 font-weight-bold text-dark text-uppercase mb-0" th:text="${pet.namePet}">Nombre
+                    </h1>
+                    <span class="text-muted h5 mb-0" th:if="${pet.location != null}"
+                        th:text="'📍 ' + ${pet.location}">Bogotá</span>
+                </div>
+
+                <h4 class="text-primary font-weight-normal mb-4"
+                    th:text="${pet.breed} + ' • ' + ${pet.age} + ' Años • ' + ${pet.gender}">Raza • Edad • Género</h4>
+
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="badge bg-light text-dark border p-2" th:if="${pet.vaccinated}"><i
+                            class="bi bi-check-circle-fill text-success me-1"></i> Vacunado</span>
+                    <span class="badge bg-light text-dark border p-2" th:if="${pet.sterilized}"><i
+                            class="bi bi-check-circle-fill text-success me-1"></i> Esterilizado</span>
+                </div>
+
+                <p class="mb-5 lead" th:text="${pet.description}" style="line-height: 1.8;">Historia de la mascota...
+                </p>
+
+                <div class="card bg-light border-0 p-4 mb-4" style="border-radius: 10px;">
+                    <h5 class="text-uppercase mb-3"><i class="bi bi-info-circle me-2"></i>¿Por qué adoptarme?</h5>
+                    <p class="mb-0">Soy una mascota llena de amor buscando una segunda oportunidad. Si crees que podemos
+                        ser mejores amigos, ¡no dudes en preguntar por mí!</p>
+                </div>
+
+                <div class="d-flex align-items-center pt-2">
+                    <a th:href="@{'/adoption-form'(id=${pet.id})}"
+                        class="btn btn-primary py-3 px-5 rounded-pill me-3 shadow-sm hover-top">
+                        <i class="bi bi-heart-fill me-2"></i> ¡Quiero Adoptar!
+                    </a>
+                    <a href="/adopt" class="btn btn-outline-secondary py-3 px-4 rounded-pill">
+                        Ver más amigos
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" th:unless="${pet != null}">
+            <div class="col-12 text-center py-5">
+                <h3>Mascota no encontrada</h3>
+                <p class="text-muted">Lo sentimos, no encontramos la información solicitada.</p>
+                <a href="/adopt" class="btn btn-primary mt-3">Volver a Adopción</a>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Detalles Mascota -->
+
+    <div th:replace="~{fragments/layout :: footer}"></div>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+
+</body>
+
+</html>

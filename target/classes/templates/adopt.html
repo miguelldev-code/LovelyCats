@@ -17,16 +17,33 @@
 
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4" th:each="pet : ${pets}">
-                    <div class="product-item position-relative bg-light d-flex flex-column text-center h-100">
-                        <img class="img-fluid mb-4" th:src="@{'/uploads/' + ${pet.image}}" alt="mascota"
-                            style="height: 250px; object-fit: cover;">
+                    <div
+                        class="product-item position-relative bg-light d-flex flex-column text-center h-100 shadow-sm rounded overflow-hidden">
+                        <div class="position-relative overflow-hidden">
+                            <img class="img-fluid w-100" th:src="@{'/uploads/' + ${pet.image}}" alt="mascota"
+                                style="height: 250px; object-fit: cover;">
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-primary" th:if="${pet.breed != null}"
+                                    th:text="${pet.breed}">Raza</span>
+                            </div>
+                        </div>
 
-                        <h6 class="text-uppercase" th:text="${pet.namePet}">Nombre Mascota</h6>
-                        <h5 class="text-primary mb-3" th:text="${pet.gender}">Género</h5>
-                        <p class="px-2" th:text="${pet.description}">Descripción...</p>
+                        <div class="p-4 flex-grow-1 d-flex flex-column">
+                            <h5 class="text-uppercase mb-1" th:text="${pet.namePet}">Nombre Mascota</h5>
+                            <div class="mb-3 text-muted small">
+                                <span th:text="${pet.gender} == 'M' ? 'Macho' : 'Hembra'">Género</span> •
+                                <span th:text="${pet.age} + ' Años'">Edad</span>
+                                <span th:if="${pet.location != null}" th:text="'• ' + ${pet.location}"></span>
+                            </div>
+                            <p class="px-2 mb-4" th:text="${#strings.abbreviate(pet.description, 80)}">Descripción...
+                            </p>
 
-                        <div class="btn-action d-flex justify-content-center mt-auto pb-4">
-                            <a class="btn btn-primary py-2 px-3" href="#">Adoptar</a>
+                            <div class="mt-auto">
+                                <a class="btn btn-primary py-2 px-4 rounded-pill w-100"
+                                    th:href="@{'/pet-detail'(id=${pet.id})}">
+                                    Ver Detalles
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

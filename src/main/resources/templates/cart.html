@@ -9,15 +9,15 @@
 
     <div class="container-fluid py-5">
         <div class="container">
-            <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 600px;">
+            <div class="border-start border-5 border-primary ps-5 mb-5">
                 <h6 class="text-primary text-uppercase">Tu Compra</h6>
                 <h1 class="display-5 text-uppercase mb-0">Carrito de Compras</h1>
             </div>
 
             <div class="row">
-                <div class="col-lg-8">
-                    <table class="table table-bordered text-center mb-0">
-                        <thead class="bg-light text-secondary">
+                <div class="col-lg-8 table-responsive mb-5">
+                    <table class="table table-bordered text-center mb-0 bg-light">
+                        <thead class="bg-primary text-white">
                             <tr>
                                 <th>Producto</th>
                                 <th>Precio</th>
@@ -28,39 +28,59 @@
                         </thead>
                         <tbody class="align-middle">
                             <tr th:each="item : ${cart}">
-                                <td class="align-middle text-start ps-3" th:text="${item.product.nameProduct}">Nombre
+                                <td class="align-middle text-start px-3">
+                                    <div class="d-flex align-items-center">
+                                        <img th:src="@{'/uploads/product/' + ${item.product.image}}" alt=""
+                                            style="width: 50px;">
+                                        <span class="ms-3" th:text="${item.product.nameProduct}">Nombre</span>
+                                    </div>
                                 </td>
                                 <td class="align-middle" th:text="'$' + ${item.product.price}">$100</td>
-                                <td class="align-middle" th:text="${item.quantity}">1</td>
+                                <td class="align-middle">
+                                    <div class="input-group quantity mx-auto" style="width: 100px;">
+                                        <input type="text" class="form-control text-center border-0 bg-light"
+                                            th:value="${item.quantity}" readonly>
+                                    </div>
+                                </td>
                                 <td class="align-middle" th:text="'$' + ${item.totalPrice}">$100</td>
                                 <td class="align-middle">
                                     <a class="btn btn-sm btn-danger" th:href="@{'/cart/remove/' + ${item.product.id}}">
-                                        <i class="bi bi-x"></i>
+                                        <i class="bi bi-trash"></i>
                                     </a>
                                 </td>
                             </tr>
                             <tr th:if="${#lists.isEmpty(cart)}">
-                                <td colspan="5" class="text-center py-4">Tu carrito está vacío.</td>
+                                <td colspan="5" class="text-center py-5">
+                                    <h5 class="text-muted">Tu carrito está vacío</h5>
+                                    <a href="/products" class="btn btn-primary mt-3">Ir a comprar</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="col-lg-4">
-                    <div class="bg-light p-30 mb-5">
+                    <div class="bg-light p-4 mb-5 shadow-sm rounded">
+                        <h4 class="text-uppercase mb-4">Resumen de Pedido</h4>
                         <div class="border-bottom pb-2">
                             <div class="d-flex justify-content-between mb-3">
                                 <h6>Subtotal</h6>
                                 <h6 th:text="'$' + ${total}">$0</h6>
                             </div>
+                            <div class="d-flex justify-content-between">
+                                <h6 class="font-weight-medium">Envío</h6>
+                                <h6 class="font-weight-medium">Gratis</h6>
+                            </div>
                         </div>
-                        <div class="pt-2">
+                        <div class="pt-3">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5>Total</h5>
                                 <h5 th:text="'$' + ${total}">$0</h5>
                             </div>
                             <a th:href="@{/cart/checkout}"
                                 class="btn btn-block btn-primary font-weight-bold my-3 py-3 w-100"
-                                th:classappend="${#lists.isEmpty(cart)} ? 'disabled'">Proceder al Pago</a>
+                                th:classappend="${#lists.isEmpty(cart)} ? 'disabled'">
+                                <i class="bi bi-credit-card me-2"></i> Proceder al Pago
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -75,15 +75,77 @@
         </div>
     </nav>
 
-    <div th:fragment="footer" class="container-fluid bg-dark text-secondary mt-5 py-5 px-sm-3 px-md-5">
-        <div class="row pt-5">
-            <div class="col-lg-3 col-md-6 mb-5">
-                <h4 class="text-uppercase text-light mb-4">Contacto</h4>
-                <p class="mb-2"><i class="bi bi-geo-alt text-primary me-2"></i>Calle 1 #12 - 3</p>
-                <p class="mb-2"><i class="bi bi-envelope-open text-primary me-2"></i>info@lovelycats.com</p>
-                <p class="mb-0"><i class="bi bi-telephone text-primary me-2"></i>+1 234 567 890</p>
+    <div th:fragment="footer" class="container-fluid bg-light mt-5 py-5 footer">
+        <div class="container pt-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-uppercase border-start border-5 border-primary ps-3 mb-4">Ponerse en contacto</h5>
+                    <p class="mb-4">No dudes en contactarnos para cualquier consulta sobre adopción o nuestros
+                        productos.</p>
+                    <p class="mb-2"><i class="bi bi-geo-alt text-primary me-2"></i>Calle 1 #12 - 3, Ciudad</p>
+                    <p class="mb-2"><i class="bi bi-envelope-open text-primary me-2"></i>info@lovelycats.com</p>
+                    <p class="mb-0"><i class="bi bi-telephone text-primary me-2"></i>+1 234 567 890</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-uppercase border-start border-5 border-primary ps-3 mb-4">Enlaces Rápidos</h5>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-body mb-2 btn-link" th:href="@{/}"><i
+                                class="bi bi-arrow-right text-primary me-2"></i>Inicio</a>
+                        <a class="text-body mb-2 btn-link" th:href="@{/adopt}"><i
+                                class="bi bi-arrow-right text-primary me-2"></i>Adoptar</a>
+                        <a class="text-body mb-2 btn-link" th:href="@{/service}"><i
+                                class="bi bi-arrow-right text-primary me-2"></i>Servicios</a>
+                        <a class="text-body mb-2 btn-link" th:href="@{/products}"><i
+                                class="bi bi-arrow-right text-primary me-2"></i>Productos</a>
+                        <a class="text-body btn-link" th:href="@{/contact}"><i
+                                class="bi bi-arrow-right text-primary me-2"></i>Contacto</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-uppercase border-start border-5 border-primary ps-3 mb-4">Enlaces Populares</h5>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-body mb-2 btn-link" href="#"><i
+                                class="bi bi-arrow-right text-primary me-2"></i>Sobre Nosotros</a>
+                        <a class="text-body mb-2 btn-link" href="#"><i
+                                class="bi bi-arrow-right text-primary me-2"></i>Nuestros Expertos</a>
+                        <a class="text-body mb-2 btn-link" href="#"><i
+                                class="bi bi-arrow-right text-primary me-2"></i>Blog</a>
+                        <a class="text-body btn-link" href="#"><i
+                                class="bi bi-arrow-right text-primary me-2"></i>Ayuda</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-uppercase border-start border-5 border-primary ps-3 mb-4">Boletín</h5>
+                    <form action="">
+                        <div class="input-group">
+                            <input type="text" class="form-control p-3" placeholder="Tu Email">
+                            <button class="btn btn-primary">Suscribirse</button>
+                        </div>
+                    </form>
+                    <h6 class="text-uppercase mt-4 mb-3">Síguenos</h6>
+                    <div class="d-flex">
+                        <a class="btn btn-outline-primary btn-square me-2" href="#"><i class="bi bi-twitter"></i></a>
+                        <a class="btn btn-outline-primary btn-square me-2" href="#"><i class="bi bi-facebook"></i></a>
+                        <a class="btn btn-outline-primary btn-square me-2" href="#"><i class="bi bi-linkedin"></i></a>
+                        <a class="btn btn-outline-primary btn-square" href="#"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
             </div>
-            <!-- Enlaces rápidos simplificados -->
+            <div class="row gx-0 align-items-center mt-5">
+                <div class="col-md-7">
+                    <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                        <p class="mb-0">&copy; <a class="text-primary" href="#">Lovely Cats</a>. Todos los derechos
+                            reservados.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="d-flex align-items-center justify-content-center justify-content-md-end">
+                        <p class="mb-0">Diseñado por <a class="text-primary"
+                                href="https://github.com/miguelldev">Miguel</a></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
